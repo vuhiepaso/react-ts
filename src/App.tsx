@@ -10,6 +10,7 @@ import {
   CP_UseLayoutEffect,
   CP_UseRef,
   CP_UseCallback,
+  CP_UseReducer,
 } from "./page/hooks";
 
 function App() {
@@ -35,8 +36,9 @@ function App() {
         {/* <CP_UseLayoutEffect /> */}
         <br />
         {/* <CP_UseRef /> */}
-        <CP_UseCallback onEvClick={handleClick} />
-        <h1>{click}</h1>
+        {/* <CP_UseCallback onEvClick={handleClick} />
+        <h1>{click}</h1> */}
+        <CP_UseReducer></CP_UseReducer>
       </div>
     </>
   );

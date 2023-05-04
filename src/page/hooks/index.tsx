@@ -5,7 +5,7 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
-  useCallback, // App
+  useCallback, // App.tsx
   useMemo,
   useReducer,
   useContext,
@@ -114,6 +114,7 @@ const CP_UseEffect3: React.FC = () => {
     </>
   );
 };
+
 // CP_UseLayoutEffect
 const CP_UseLayoutEffect: React.FC = () => {
   const [count, setCount] = useState(0);
@@ -188,6 +189,82 @@ const CP_UseCallback: React.FC<MyComponentProps> = memo(({ onEvClick }) => {
     </>
   );
 });
+// UseMemo
+const CP_UseMemo: React.FC = () => {
+  const UseMemo = useMemo(() => {
+    console.log("thưc hiện một lần ");
+    return "thưc hiện một lần ";
+  }, []);
+
+  const [update, setUpdate] = useState([]);
+  const UseMemo1 = useMemo(() => {
+    console.log("thưc hiện khi 'update' thay đổi ");
+    return "thưc hiện khi 'update' thay đổi";
+  }, [update]);
+
+  return (
+    <>
+      <div></div>
+    </>
+  );
+};
+
+// CP_UseReducer
+// The steps use hook useReducer
+// 1 Init state
+// 2 Actions: ex: up or down
+// 3 Reducer
+// 4 Dispatch
+
+// 1 Init
+const initState = 0;
+
+// 2 Actions
+const up_action = "up";
+const down_action = "down";
+
+// 3 Reducer
+const reducer = (state: number, action: string) => {
+  switch (action) {
+    case up_action:
+      return state + 1;
+    case down_action:
+      return state - 1;
+    default:
+      throw new Error("Invalid actions");
+  }
+};
+
+const CP_UseReducer: React.FC = () => {
+  //4 dispatch
+  const [count, dispatch] = useReducer(reducer, initState);
+  return (
+    <>
+      <button onClick={() => dispatch(up_action)}>up</button>
+      <button onClick={() => dispatch(down_action)}>down</button>
+      <br />
+      <div>{count}</div>
+    </>
+  );
+};
+
+// useContext
+const CP_UseContext: React.FC = () => {
+  return (
+    <>
+      <div>UseContext</div>
+    </>
+  );
+};
+// CP_UseImperativeHandle
+const CP_UseImperativeHandle: React.FC = () => {
+  return (
+    <>
+      <div>seImperativeHandle</div>
+    </>
+  );
+};
+
 export {
   CP_UseState, // qảu lý variable get and set
   //
@@ -195,7 +272,11 @@ export {
   CP_UseEffect2, // UseEffect chạy một lần khi DOM đc render nếu Dependency List = []
   CP_UseEffect3, //UseEffect hới giống với watch ở vue
   //
-  CP_UseLayoutEffect, // function thực hiện ở giai trước khi thay đổi DOM thật
+  CP_UseLayoutEffect, // function thực hiện ở giai trước khi thay đổi DOM thật thực hiên đồng bộ
   CP_UseRef, //  giống việc ta khai báo biến ở ngoài function CP_UseRef (đưa tham chiếu ra khỏi function)
-  CP_UseCallback, // kết hợp với memo để không phải render lại các phần không cần thiết
+  CP_UseCallback, // kết hợp với memo để không phải render lại các phần không cần thiết,
+  CP_UseMemo, // dùng để không phải chay các function không cần thiết
+  CP_UseReducer, // dùng để thay thế useState khí mà state cần tái sửa dụng phủ hợp với việc tái cấu trúc code
+  CP_UseContext, // dùng để chuyền dữ liệu quả các component EX component ÔNG tới component CHÁU
+  CP_UseImperativeHandle, // Dùng để chỉ định các phương thức của component con sẽ được sử dụng bởi component cha
 };
