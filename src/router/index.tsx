@@ -4,21 +4,23 @@ import Home from "../page/home";
 import Auth from "../page/auth";
 //layout
 import LayoutAuth from "../layout/auth";
+import LayoutDefault from "../layout/layoutDefault";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-    handle: {
-      layout: "",
-    },
+    element:
+    <LayoutDefault>
+      <Home />
+    </LayoutDefault>,
   },
+  
   {
     path: "/auth",
-    element: <Auth />,
-    handle: {
-      layout: LayoutAuth,
-    },
+    element: 
+    <LayoutDefault>
+      <Auth />
+    </LayoutDefault>,
   },
 ]);
 export { router };

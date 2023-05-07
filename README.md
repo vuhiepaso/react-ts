@@ -5,20 +5,12 @@
 - TypeScript
 - Node - v16.15.0
 
+# Dependencies
+
+- Ant Design (UI)
+- Tailwind (CSS)
+
 # Run project
 
 - npm install
 - npm run dev
-
-# The hooks
-
-useState,
-useEffect,
-useLayoutEffect,
-useRef,
-useCallback,
-useMemo,
-useReducer,
-useContext,
-useImperativeHandle,
-useDebugValue,
