@@ -1,7 +1,14 @@
 import { Button, Checkbox, Form, Input } from "antd";
+import { useDispatch } from "react-redux";
+
+import { loginThunk } from "../../store/sliceAuth";
+import { Auth } from "../../interface";
 function Auth() {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  const dispatch = useDispatch();
+
+  const onFinish = (values: Auth) => {
+    const data = loginThunk(values);
+    dispatch(data);
   };
 
   const onFinishFailed = (errorInfo: any) => {

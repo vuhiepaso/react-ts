@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import Menu from "../ui/Menu";
+import { useSelector } from "react-redux";
 function LayoutDefault(props: any) {
+  const state = useSelector((state) => state);
+  console.log("state", state);
   return (
     <>
-      <header className="">
-        <div className="container flex justify-between px-5">
+      <header className="bg-green-100">
+        <div className="container flex justify-between items-center px-5 py-7">
           <h2 className="text-3xl">MY HOME</h2>
-          <div>
+          <div className="flex ">
             <Link to={"/auth"}>Login</Link>
           </div>
         </div>
