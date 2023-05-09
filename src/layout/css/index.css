@@ -1,0 +1,8 @@
+.box_header{
+    background-color: cornsilk;
+}
+.box__footer{
+    padding: 20px;
+    min-height: 200px;
+    background-color: rgb(49, 49, 49);
+}

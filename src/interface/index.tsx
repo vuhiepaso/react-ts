@@ -1,6 +1,6 @@
-interface Auth {
+interface IFAuth {
   username: string;
   password: string;
   remember: boolean;
 }
-export type { Auth };
+export type { IFAuth };

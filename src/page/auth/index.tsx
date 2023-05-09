@@ -1,19 +1,48 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 import { loginThunk } from "../../store/sliceAuth";
-import { Auth } from "../../interface";
+import { IFAuth } from "../../interface";
+interface MessageAuth {
+  status: "" | "error";
+  messHelp: string | null;
+}
+
 function Auth() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const onFinish = (values: Auth) => {
-    const data = loginThunk(values);
-    dispatch(data);
+  // Manage State
+  const [messageAuth, setMessageAuth] = useState<MessageAuth>({
+    status: "",
+    messHelp: null,
+  });
+
+  const onFinish = async (values: IFAuth) => {
+    const { payload } = await dispatch(loginThunk(values));
+    if (payload.status !== "200") {
+      setMessageAuth({
+        status: "error",
+        messHelp: "Email or password invalid",
+      });
+    } else navigate("/");
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+  const handleValuesChange = () => {
+    if (messageAuth.messHelp) {
+      setMessageAuth({
+        status: "",
+        messHelp: null,
+      });
+    }
   };
+
+  // const onFinishFailed = (errorInfo: any) => {
+  //   console.log("Failed:", errorInfo);
+  // };
+
   return (
     <>
       <div className=" max-w-xs m-auto mt-28">
@@ -25,13 +54,16 @@ function Auth() {
           layout="vertical"
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+          // onFinishFailed={onFinishFailed}
+          onValuesChange={handleValuesChange}
           autoComplete="off"
         >
           <Form.Item
             label="Username"
             name="username"
             rules={[{ required: true, message: "Please input your username!" }]}
+            validateStatus={messageAuth.status}
+            help={messageAuth.messHelp}
           >
             <Input />
           </Form.Item>
@@ -40,6 +72,8 @@ function Auth() {
             label="Password"
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
+            validateStatus={messageAuth.status}
+            help={messageAuth.messHelp}
           >
             <Input.Password />
           </Form.Item>
