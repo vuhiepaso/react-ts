@@ -1,4 +1,4 @@
-import routerDom, { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 // Page
 import Home from "../page/home";
 import Auth from "../page/auth";
@@ -6,11 +6,10 @@ import Auth from "../page/auth";
 import LayoutAuth from "../layout/auth";
 import LayoutDefault from "../layout/layoutDefault";
 
-// routerDom.useBeforeUnload(
-//   () => {
-//     console.log('ok')
-//   }
-// )
+const IsAuth = ({ children }: { children: JSX.Element }) => {
+  return <>{children}</>;
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,6 +18,11 @@ const router = createBrowserRouter([
         <Home />
       </LayoutDefault>
     ),
+    // children: [
+    //   {
+    //     element: <Home />,
+    //   },
+    // ],
   },
 
   {
@@ -31,4 +35,4 @@ const router = createBrowserRouter([
   },
   // { path: "*", element: <NotFound /> },
 ]);
-export { router, routerDom };
+export { router };
