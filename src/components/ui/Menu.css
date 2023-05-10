@@ -1,0 +1,15 @@
+.container__nav{
+    font-weight: 600;
+    font-size: 18px;
+}
+.box__to--link{
+    border-radius: 5px;
+    border: 1px solid #150c15;
+
+}
+.box__to--link:hover{
+    border-color: whitesmoke;
+}
+.mn_active{
+    border-color: whitesmoke;
+}

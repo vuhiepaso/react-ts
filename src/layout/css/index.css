@@ -1,8 +1,15 @@
 .box_header{
-    background-color: cornsilk;
+    background-color: #150c15;
+    color: whitesmoke;
+}
+.earth{
+    background-color: blue;
+    padding: 0 5px;
+    border-radius: 8px;
 }
 .box__footer{
     padding: 20px;
     min-height: 200px;
-    background-color: rgb(49, 49, 49);
+    background-color: #150c15;
+    color: whitesmoke;
 }

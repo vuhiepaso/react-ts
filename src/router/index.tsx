@@ -15,12 +15,12 @@ import { RootState } from "../store";
 const IsAuth = () => {
   const navigate = useNavigate();
   const state = useSelector((state: RootState) => state);
+
   if (!state.auth.myToke) {
     setTimeout(() => {
       navigate("/auth");
     }, 600);
   }
-
   return <Outlet />;
 };
 

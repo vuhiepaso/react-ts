@@ -26,8 +26,13 @@ const authSlice: Slice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    loginAction: (state, action) => {
-      state.profile = action.payload;
+    logoutAction: (state) => {
+      state = {
+        profile: {},
+        myToke: "",
+        isAuth: false,
+      };
+      // localStorage.removeItem('token')
     },
   },
   extraReducers: (builder) => {
@@ -49,5 +54,5 @@ const authSlice: Slice = createSlice({
   },
 });
 const { reducer, actions } = authSlice;
-export const { loginAction } = actions; // Actions
+export const { logoutAction } = actions; // Actions
 export default reducer;
