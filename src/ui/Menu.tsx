@@ -7,9 +7,17 @@ const Menu: React.FC = () => {
       name: "Home",
       to: "/",
     },
+    // {
+    //   name: "Login",
+    //   to: "/auth",
+    // },
     {
-      name: "Login",
-      to: "/auth",
+      name: "Equipment",
+      to: "/equipment",
+    },
+    {
+      name: "Room",
+      to: "/room",
     },
   ];
   return (

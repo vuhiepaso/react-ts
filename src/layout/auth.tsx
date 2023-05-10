@@ -1,5 +1,7 @@
+import { Outlet } from "react-router-dom";
 import "./css/index.css";
-function LayoutAuth(props: any) {
+function LayoutAuth() {
+  // console.log("reload LayoutAuth");
   return (
     <>
       <header className="box_header">
@@ -7,7 +9,7 @@ function LayoutAuth(props: any) {
           <h2 className="text-3xl">MY HOME</h2>
         </div>
       </header>
-      {props.children}
+      <Outlet />
       {/* <footer>Footer for</footer> */}
     </>
   );
