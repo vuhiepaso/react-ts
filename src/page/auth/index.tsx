@@ -1,12 +1,13 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 // import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { loginThunk } from "../../store/sliceAuth";
 import { IFAuth } from "../../interface";
 import "./css/login.css";
 import { useAppDispatch } from "../../store";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 interface MessageAuth {
   status: "" | "error";
   messHelp: string | null;
@@ -61,13 +62,16 @@ function Auth() {
           autoComplete="off"
         >
           <Form.Item
-            label="Username"
+            label="Email"
             name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            rules={[
+              { required: true, message: "Please input your username!" },
+              { type: "email", message: "This is not a valid email" },
+            ]}
             validateStatus={messageAuth.status}
             help={messageAuth.messHelp}
           >
-            <Input />
+            <Input prefix={<MailOutlined />} placeholder="Email" />
           </Form.Item>
 
           <Form.Item
@@ -75,21 +79,24 @@ function Auth() {
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
             validateStatus={messageAuth.status}
-            help={messageAuth.messHelp}
+            // help={messageAuth.messHelp}
           >
-            <Input.Password />
+            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
           </Form.Item>
 
-          <Form.Item name="remember" valuePropName="checked">
+          {/* <Form.Item name="remember" valuePropName="checked">
             <Checkbox>Remember me</Checkbox>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item className="text-center">
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button type="primary" htmlType="submit" className="w-full">
+              Log in
             </Button>
           </Form.Item>
         </Form>
+      </div>
+      <div className="text-center mt-4 font-medium">
+        <Link to={"/register"}>Register Account</Link>
       </div>
     </>
   );

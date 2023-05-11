@@ -3,4 +3,10 @@ interface IFAuth {
   password: string;
   remember: boolean;
 }
-export type { IFAuth };
+
+interface IFRegister {
+  username: string;
+  password: string;
+  email: string;
+}
+export type { IFAuth, IFRegister };

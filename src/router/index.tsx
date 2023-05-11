@@ -1,5 +1,4 @@
-import { createBrowserRouter, useNavigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { createBrowserRouter } from "react-router-dom";
 //Throw errors
 import { err400 } from "../page/throwErrors";
 //Layout
@@ -10,6 +9,7 @@ import Home from "../page/home";
 import Auth from "../page/auth";
 import Equipment from "../page/equipment";
 import Room from "../page/room";
+import Register from "../page/auth/Register";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/auth",
         element: <Auth />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },

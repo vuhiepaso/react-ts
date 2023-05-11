@@ -1,4 +1,4 @@
-import { IFAuth } from "../../interface";
+import { IFAuth, IFRegister } from "../../interface";
 import axios from "../axios";
 const APILogin = (params: IFAuth) =>
   axios
@@ -13,4 +13,14 @@ const APILogin = (params: IFAuth) =>
       // handle error
       return error.response;
     });
-export { APILogin };
+
+const APIregister = (params: IFRegister) =>
+  axios
+    .post("accounts/register", params)
+    .then(function (response) {
+      return response;
+    })
+    .catch(function (error) {
+      return error.response;
+    });
+export { APILogin, APIregister };
