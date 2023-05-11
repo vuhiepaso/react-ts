@@ -1,4 +1,4 @@
-import { createSlice, Slice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { IFAuth } from "../interface";
 import { APILogin } from "../api/auth";
 
@@ -12,27 +12,29 @@ export const loginThunk = createAsyncThunk(
 );
 
 export interface InitialStateAuth {
-  profile: object;
+  profile: { username?: string; role?: string; email?: string; id?: number };
   myToke: string;
   isAuth: boolean;
 }
-
+let info = [];
+if (localStorage.getItem("profile")) {
+  info = JSON.parse(localStorage.getItem("profile") || "");
+}
 const initialState: InitialStateAuth = {
-  profile: {},
-  myToke: "",
-  isAuth: false,
+  profile: { ...info },
+  myToke: localStorage.getItem("token") + "",
+  isAuth: localStorage.getItem("token") ? true : false,
 };
-const authSlice: Slice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     logoutAction: (state) => {
-      state = {
-        profile: {},
-        myToke: "",
-        isAuth: false,
-      };
-      // localStorage.removeItem('token')
+      state.profile = {};
+      state.myToke = "";
+      state.isAuth = false;
+      localStorage.removeItem("profile");
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -45,7 +47,8 @@ const authSlice: Slice = createSlice({
         state.profile = data.info;
         state.myToke = data.token;
         state.isAuth = true;
-        // localStorage.setItem("token", data.token);
+        localStorage.setItem("profile", JSON.stringify(data.info));
+        localStorage.setItem("token", data.token);
       }
     });
     // builder.addCase(loginThunk.rejected, (state, action) => {

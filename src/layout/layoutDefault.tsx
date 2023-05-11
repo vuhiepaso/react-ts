@@ -1,17 +1,18 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 
 import Menu from "../components/ui/Menu";
-import { RootState } from "../store";
+import { RootState, useAppDispatch } from "../store";
 import "./css/index.css";
 import { logoutAction } from "../store/sliceAuth";
 
 function LayoutDefault() {
   const state = useSelector((state: RootState) => state).auth;
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   // console.log("state", state.profile.username);
@@ -39,7 +40,7 @@ function LayoutDefault() {
             {state.isAuth ? (
               <div className="flex  items-center" onClick={() => setOpen(true)}>
                 <div className="mt-1 mr-1">Logout</div>
-                <LogoutOutlined className="py-4 text-2xl" />
+                <LogoutOutlined className="icon_logout py-4 text-xl font-black" />
               </div>
             ) : (
               <>
@@ -70,3 +71,14 @@ function LayoutDefault() {
   );
 }
 export default LayoutDefault;
+
+export const IsAuth = () => {
+  const navigate = useNavigate();
+  const state = useSelector((state: RootState) => state);
+  if (!state.auth.isAuth) {
+    setTimeout(() => {
+      navigate("/auth");
+    }, 0);
+  }
+  return <Outlet />;
+};

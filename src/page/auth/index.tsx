@@ -1,17 +1,19 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { loginThunk } from "../../store/sliceAuth";
 import { IFAuth } from "../../interface";
+import "./css/login.css";
+import { useAppDispatch } from "../../store";
 interface MessageAuth {
   status: "" | "error";
   messHelp: string | null;
 }
 
 function Auth() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   // Manage State
@@ -45,7 +47,7 @@ function Auth() {
 
   return (
     <>
-      <div className=" max-w-xs m-auto mt-28">
+      <div className="box_login max-w-xs m-auto mt-28">
         <div className="text-center">
           <h2 className="text-2xl font-medium mb-5">Login</h2>
         </div>

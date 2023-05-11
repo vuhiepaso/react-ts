@@ -4,25 +4,12 @@ import { useSelector } from "react-redux";
 import { err400 } from "../page/throwErrors";
 //Layout
 import LayoutAuth from "../layout/auth";
-import LayoutDefault from "../layout/layoutDefault";
+import LayoutDefault, { IsAuth } from "../layout/layoutDefault";
 // Page
 import Home from "../page/home";
 import Auth from "../page/auth";
 import Equipment from "../page/equipment";
 import Room from "../page/room";
-import { RootState } from "../store";
-
-const IsAuth = () => {
-  const navigate = useNavigate();
-  const state = useSelector((state: RootState) => state);
-
-  if (!state.auth.myToke) {
-    setTimeout(() => {
-      navigate("/auth");
-    }, 600);
-  }
-  return <Outlet />;
-};
 
 const router = createBrowserRouter([
   {

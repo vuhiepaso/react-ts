@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 import Auth from "./sliceAuth";
 // STORE
 const store = configureStore({
@@ -8,3 +9,4 @@ const store = configureStore({
 });
 export type RootState = ReturnType<typeof store.getState>;
 export default store;
+export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
