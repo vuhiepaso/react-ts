@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Spin } from "antd";
 // import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -16,6 +16,7 @@ interface MessageAuth {
 function Auth() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [spinning, setSpinning] = useState(false);
 
   // Manage State
   const [messageAuth, setMessageAuth] = useState<MessageAuth>({
@@ -24,7 +25,9 @@ function Auth() {
   });
 
   const onFinish = async (values: IFAuth) => {
+    setSpinning(true);
     const { payload } = await dispatch(loginThunk(values));
+    setSpinning(false);
     if (payload.status !== "200") {
       setMessageAuth({
         status: "error",
@@ -89,9 +92,11 @@ function Auth() {
           </Form.Item> */}
 
           <Form.Item className="text-center">
-            <Button type="primary" htmlType="submit" className="w-full">
-              Log in
-            </Button>
+            <Spin spinning={spinning} delay={100}>
+              <Button type="primary" htmlType="submit" className="w-full">
+                Log in
+              </Button>
+            </Spin>
           </Form.Item>
         </Form>
       </div>

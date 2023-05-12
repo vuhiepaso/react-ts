@@ -55,7 +55,7 @@ function LayoutDefault() {
       </header>
 
       {/* body content */}
-      <div className="container m-auto">
+      <div className="container mx-auto mb-5 ">
         <Outlet />
       </div>
       <footer className="box__footer container m-auto">Footer for</footer>

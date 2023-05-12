@@ -1,4 +1,4 @@
-import { Button, Form, Input, notification } from "antd";
+import { Button, Form, Input, Spin, notification } from "antd";
 import { useState } from "react";
 import "./css/login.css";
 import {
@@ -23,9 +23,12 @@ function Register() {
     status: "",
     messHelp: null,
   });
+  const [spinning, setSpinning] = useState(false);
 
   const onFinish = async (values: IFRegister) => {
+    setSpinning(true);
     const rq = await APIregister(values);
+    setSpinning(false);
     if (rq.data.status !== "success") {
       setMessageAuth({
         status: "error",
@@ -110,9 +113,11 @@ function Register() {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Register
-            </Button>
+            <Spin spinning={spinning} delay={100}>
+              <Button type="primary" htmlType="submit">
+                Register
+              </Button>
+            </Spin>
           </Form.Item>
         </Form>
       </div>
