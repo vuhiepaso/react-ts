@@ -5,20 +5,23 @@ import { Link } from "react-router-dom";
 const { Meta } = Card;
 import "./index.css";
 
-export interface ProductCard {
+export interface Product {
   id: any;
   image: string;
   title: string;
   price: string;
   description?: string;
+  width?: number | string;
+  height?: number | string;
 }
 
-const ProductCard = ({ ...product }: ProductCard) => {
+const ProductCard = ({ ...product }: Product) => {
   return (
     <>
-      <div style={{ width: 260 }}>
+      <div style={{ width: product.width || 270, height: product.height }}>
         <Link key={product.id} to={`product/${product.id}`}>
           <Card
+            style={{ height: "100%" }}
             hoverable
             loading={false}
             cover={

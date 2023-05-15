@@ -10,6 +10,7 @@ import Auth from "../page/auth";
 import Equipment from "../page/equipment";
 import Room from "../page/room";
 import Register from "../page/auth/Register";
+import ProductDetail from "../page/product/ProductDetail";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/product/:productID",
+        element: <ProductDetail />,
       },
       // Page request auth
       {
@@ -30,10 +35,6 @@ const router = createBrowserRouter([
           {
             path: "/room",
             element: <Room />,
-          },
-          {
-            path: "/product/:productID",
-            element: <div>product</div>,
           },
         ],
       },
