@@ -26,7 +26,10 @@ const ProductCard = ({ ...product }: Product) => {
             loading={false}
             cover={
               <>
-                <img src={product.image} />
+                <img
+                  style={{ height: 180, objectFit: "cover" }}
+                  src={product.image}
+                />
                 {!product.image && (
                   <Skeleton.Image
                     className="w-full skeleton__image"

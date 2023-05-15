@@ -9,6 +9,7 @@ import { listProduct } from "../../api/product";
 interface Products {
   listData?: Product[] | undefined;
   loading?: boolean;
+  page?: number;
 }
 const Home = () => {
   const [products, setProducts] = useState<Products>({});
@@ -19,12 +20,21 @@ const Home = () => {
       loading: true,
     }));
     const productList = async () => {
-      const { data } = await listProduct(1, 8);
-      setProducts({ loading: false, listData: data.product });
+      const { data } = await listProduct(products.page || 1, 0);
+      setProducts((prevState) => ({
+        ...prevState,
+        loading: false,
+        listData: data.product,
+      }));
     };
     productList();
-  }, []);
-
+  }, [products.page]);
+  const changePage = (page: number) => {
+    setProducts((prevState) => ({
+      ...prevState,
+      page,
+    }));
+  };
   return (
     <>
       <div className="mb-4 mt-1">
@@ -48,7 +58,7 @@ const Home = () => {
           </Row>
         </Skeleton>
         <br />
-        <Pagination defaultCurrent={1} total={20} />
+        <Pagination defaultCurrent={1} total={20} onChange={changePage} />
       </div>
     </>
   );

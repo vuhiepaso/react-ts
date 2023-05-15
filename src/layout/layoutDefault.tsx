@@ -1,8 +1,16 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import {
+  EnvironmentOutlined,
+  FacebookOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
+import { Badge, Modal } from "antd";
 
 import Menu from "../components/ui/Menu";
 import { RootState, useAppDispatch } from "../store";
@@ -36,7 +44,19 @@ function LayoutDefault() {
           <div className="flex justify-between items-center">
             <div className="mt-1 mr-1">{state.profile.username || "Name"}</div>
             <div className="mx-3">|</div>
-
+            {state.isAuth && (
+              <>
+                <Link to={"/cart"}>
+                  <Badge count={5}>
+                    <ShoppingCartOutlined
+                      style={{ color: "#fff" }}
+                      className="text-2xl "
+                    />
+                  </Badge>
+                </Link>
+                <div className="mx-3">|</div>
+              </>
+            )}
             {state.isAuth ? (
               <div className="flex  items-center" onClick={() => setOpen(true)}>
                 <div className="mt-1 mr-1">Logout</div>
@@ -58,7 +78,31 @@ function LayoutDefault() {
       <div className="container mx-auto mb-5 ">
         <Outlet />
       </div>
-      <footer className="box__footer container m-auto">Footer for</footer>
+      <footer className="box__footer container m-auto">
+        <div className="px-10 py-5">
+          <h2 className="text-3xl font-bold logo">
+            MY <span className="earth">EARTH</span>
+          </h2>
+          <div className="mt-5 " style={{ lineHeight: 2 }}>
+            <div className="flex items-center">
+              <MailOutlined /> <span className="ml-3">abc@vmodev.com</span>
+            </div>
+            <div className="flex items-center">
+              <PhoneOutlined /> <span className="ml-3">19009168</span>
+            </div>
+            <div className="flex items-center">
+              <FacebookOutlined />{" "}
+              <span className="ml-3">https://www.facebook.com</span>
+            </div>
+            <div className="flex items-center">
+              <EnvironmentOutlined />{" "}
+              <span className="ml-3">
+                19 - Duy Tan - Nam Tu Liem - HaNoi - VN
+              </span>
+            </div>
+          </div>
+        </div>
+      </footer>
 
       {/* Modal Logout */}
       <Modal
