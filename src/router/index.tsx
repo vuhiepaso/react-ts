@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/product/:productID",
+        path: "/product/:page?/:product_id",
         element: <ProductDetail />,
       },
       // Page request auth

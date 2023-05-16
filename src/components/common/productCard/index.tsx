@@ -7,6 +7,7 @@ import "./index.css";
 
 export interface Product {
   id: any;
+  page?: number;
   image: string;
   title: string;
   price: string;
@@ -19,7 +20,10 @@ const ProductCard = ({ ...product }: Product) => {
   return (
     <>
       <div style={{ width: product.width || 270, height: product.height }}>
-        <Link key={product.id} to={`product/${product.id}`}>
+        <Link
+          key={product.id}
+          to={`product/${product.page || 1}/${+product.id}`}
+        >
           <Card
             style={{ height: "100%" }}
             hoverable

@@ -52,7 +52,12 @@ const Home = () => {
           <Row gutter={[24, 24]}>
             {products.listData?.map((product, index) => (
               <Col span={4} key={index}>
-                <ProductCard width={"100%"} height={"100%"} {...product} />
+                <ProductCard
+                  page={products.page}
+                  width={"100%"}
+                  height={"100%"}
+                  {...product}
+                />
               </Col>
             ))}
           </Row>
