@@ -9,13 +9,16 @@ import { CarouselRef } from "antd/es/carousel";
 import { currencyFormat } from "../../utils/format";
 import { useParams } from "react-router-dom";
 import { listProduct } from "../../api/product";
+import { useAppDispatch } from "../../store";
+import { addToCart } from "../../store/sliceProductCart";
+import { ItemProductCart } from "../cart";
 export interface IFProductDetail {
-  id?: any;
-  nameProduct?: string;
-  price?: number;
-  quantity?: number;
-  describe?: string;
-  images?: string[];
+  id: string;
+  nameProduct: string;
+  price: number;
+  quantity: number;
+  describe: string;
+  images: string[];
 }
 const images = [
   "https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp",
@@ -26,15 +29,26 @@ const ProductDetail = () => {
   const [visible, setVisible] = useState(false);
   const refCarousel = useRef<CarouselRef>(null);
   const [quantity, setQuantity] = useState(0);
-  const [productData, setProductData] = useState<IFProductDetail>({});
+  const [productData, setProductData] = useState<IFProductDetail>(
+    {} as IFProductDetail
+  );
 
   const image = productData.images ? productData.images[0] : "";
   const [imageDefault, setImageDefault] = useState(image);
   const [loading, setLoading] = useState(true);
 
+  const dispatch = useAppDispatch();
+
   const handleAddToCart = () => {
-    const data = { ...productData, quantity };
-    console.log("data", data);
+    const data: ItemProductCart = {
+      id: productData.id,
+      name: productData.nameProduct,
+      quantity: productData.quantity,
+      numberOder: quantity,
+      price: productData.price,
+      image: productData.images?.length ? productData.images[0] : undefined,
+    };
+    dispatch(addToCart(data));
   };
   const { page, product_id } = useParams();
   useEffect(() => {

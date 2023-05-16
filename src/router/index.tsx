@@ -11,6 +11,7 @@ import Equipment from "../page/equipment";
 import Room from "../page/room";
 import Register from "../page/auth/Register";
 import ProductDetail from "../page/product/ProductDetail";
+import Cart from "../page/cart";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/cart",
-            element: <div>cart</div>,
+            element: <Cart />,
           },
         ],
       },

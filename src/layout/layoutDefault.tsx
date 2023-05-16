@@ -19,6 +19,7 @@ import { logoutAction } from "../store/sliceAuth";
 
 function LayoutDefault() {
   const state = useSelector((state: RootState) => state).auth;
+  const carSate = useSelector((state: RootState) => state).card;
   // const dispatch = useDispatch();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ function LayoutDefault() {
             {state.isAuth && (
               <>
                 <Link to={"/cart"}>
-                  <Badge count={5}>
+                  <Badge count={carSate.products.length}>
                     <ShoppingCartOutlined
                       style={{ color: "#fff" }}
                       className="text-2xl "
