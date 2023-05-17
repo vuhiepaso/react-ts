@@ -119,11 +119,10 @@ const EqCard = ({ ...item }: IFEquipment) => {
 
 const styleCard: CSSProperties = {
   backgroundColor: "rgb(204 204 204 / 20%)",
-  width: "inherit",
-  height: "inherit",
   position: "absolute",
   borderRadius: 8,
-  left: 90,
   color: "red",
+  width: 220,
+  height: "inherit",
   // zIndex: 20,
 };

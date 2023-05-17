@@ -1,7 +1,8 @@
-import { Button, Empty, InputNumber, Modal } from "antd";
+import { Button, Col, Empty, InputNumber, Modal, Row, Steps } from "antd";
 import { useEffect, useState } from "react";
 import { currencyFormat } from "../../utils/format";
 import {
+  FileDoneOutlined,
   MinusOutlined,
   PicLeftOutlined,
   PlusOutlined,
@@ -46,31 +47,43 @@ const Cart = () => {
         <div className="my-10 text-3xl font-bold flex items-center">
           <PicLeftOutlined /> <div className="ml-3">List product in cart</div>
         </div>
-        {carSate.products.length ? (
-          <div>
-            {carSate.products.map((product) => (
-              <div key={product.id} className="mb-2">
-                <Item {...product} />
+        <Row>
+          <Col flex={3}>
+            {carSate.products.length ? (
+              <div>
+                {carSate.products.map((product) => (
+                  <div key={product.id} className="mb-2">
+                    <Item {...product} />
+                  </div>
+                ))}
+                <div className="mt-10 flex justify-between ">
+                  <Button
+                    onClick={() => handlePay()}
+                    style={{ maxWidth: 200 }}
+                    type="primary"
+                    block
+                  >
+                    Pay
+                  </Button>
+                  <div className="text-2xl flex items-center">
+                    <span className="font-medium mr-5">Total: </span>
+                    {currencyFormat(total)} VND
+                  </div>
+                </div>
               </div>
-            ))}
-            <div className="mt-10 flex justify-between ">
-              <Button
-                onClick={() => handlePay()}
-                style={{ maxWidth: 380 }}
-                type="primary"
-                block
-              >
-                Pay
-              </Button>
-              <div className="text-3xl flex items-center">
-                <span className="font-medium mr-5">Total: </span>
-                {currencyFormat(total)} VND
+            ) : (
+              <Empty className="mt-28" />
+            )}
+          </Col>
+          <Col flex={2}>
+            <div className="pl-20">
+              <div className="text-3xl font-bold mb-20 flex items-center">
+                <FileDoneOutlined /> Status Order
               </div>
+              <ItemStatusBill />
             </div>
-          </div>
-        ) : (
-          <Empty className="mt-28" />
-        )}
+          </Col>
+        </Row>
       </div>
       <Modal
         title={codeBill}
@@ -139,7 +152,10 @@ const Item = ({ ...productCart }: ItemProductCart) => {
             <Link to={productCart.url}>
               <div className="text-2xl font-bold">{productCart.name}</div>
             </Link>
-            <div className="my-5"></div>
+            <div className=" my-1 text-xl flex items-center">
+              <span className="font-medium mr-5">Price: </span>
+              {currencyFormat(productCart.price * productCart.numberOder)} VND
+            </div>
             <div>
               <InputNumber
                 style={{ width: 200 }}
@@ -182,10 +198,7 @@ const Item = ({ ...productCart }: ItemProductCart) => {
               />
             </div>
           </div>
-          <div className="text-3xl flex items-center">
-            <span className="font-medium mr-5">Price: </span>
-            {currencyFormat(productCart.price * productCart.numberOder)} VND
-          </div>
+
           <div>
             <Button onClick={() => handleRemove()} type="primary" danger ghost>
               Remove
@@ -193,6 +206,32 @@ const Item = ({ ...productCart }: ItemProductCart) => {
           </div>
         </div>
       </div>
+    </>
+  );
+};
+
+const ItemStatusBill = () => {
+  return (
+    <>
+      <div className="text-xl font-bold my-2 ">Name bill</div>
+      <Steps
+        // labelPlacement="vertical"
+        current={1}
+        items={[
+          {
+            title: "Waiting",
+            description: "This is a description.",
+          },
+          {
+            title: "In Progress",
+            description: "This is a description.",
+          },
+          {
+            title: "Finished",
+            description: "This is a description.",
+          },
+        ]}
+      />
     </>
   );
 };
