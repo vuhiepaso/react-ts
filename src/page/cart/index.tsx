@@ -33,6 +33,11 @@ const Cart = () => {
     const code = "MDH" + Math.floor(Math.random() * 9999999);
     setCodeBill(code);
   };
+
+  const handleOrder = () => {
+    alert("ok");
+  };
+
   const handleCheckPayment = async () => {
     const data = await checkPayment(NUM_AC);
     if (data.message === "success") {
@@ -44,11 +49,12 @@ const Cart = () => {
   return (
     <>
       <div style={{ minHeight: 600 }} className="px-5 pt-5">
-        <div className="my-10 text-3xl font-bold flex items-center">
-          <PicLeftOutlined /> <div className="ml-3">List product in cart</div>
-        </div>
-        <Row>
-          <Col flex={3}>
+        <Row className="mt-10 ">
+          <Col flex={4}>
+            <div className="text-3xl mb-12 font-bold flex items-center">
+              <PicLeftOutlined />{" "}
+              <div className="ml-3">List product in cart</div>
+            </div>
             {carSate.products.length ? (
               <div>
                 {carSate.products.map((product) => (
@@ -57,14 +63,27 @@ const Cart = () => {
                   </div>
                 ))}
                 <div className="mt-10 flex justify-between ">
-                  <Button
-                    onClick={() => handlePay()}
-                    style={{ maxWidth: 200 }}
-                    type="primary"
-                    block
-                  >
-                    Pay
-                  </Button>
+                  <div className="w-1/2">
+                    <div className="mb-2">
+                      <Button
+                        onClick={() => handlePay()}
+                        style={{ maxWidth: 200 }}
+                        type="primary"
+                        block
+                      >
+                        Pay now
+                      </Button>
+                    </div>
+                    <Button
+                      onClick={() => handleOrder()}
+                      style={{ maxWidth: 200 }}
+                      type="primary"
+                      block
+                    >
+                      Order
+                    </Button>
+                  </div>
+
                   <div className="text-2xl flex items-center">
                     <span className="font-medium mr-5">Total: </span>
                     {currencyFormat(total)} VND
@@ -75,7 +94,7 @@ const Cart = () => {
               <Empty className="mt-28" />
             )}
           </Col>
-          <Col flex={2}>
+          <Col flex={1}>
             <div className="pl-20">
               <div className="text-3xl font-bold mb-20 flex items-center">
                 <FileDoneOutlined /> Status Order
@@ -219,16 +238,16 @@ const ItemStatusBill = () => {
         current={1}
         items={[
           {
-            title: "Waiting",
-            description: "This is a description.",
+            title: "Store",
+            description: "Expected delivery 20/12/2023",
           },
           {
-            title: "In Progress",
-            description: "This is a description.",
+            title: "Delivery",
+            description: "Expected to receive 20/12/2023",
           },
           {
             title: "Finished",
-            description: "This is a description.",
+            description: "Finished 20/12/2023",
           },
         ]}
       />

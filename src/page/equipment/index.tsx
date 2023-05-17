@@ -3,7 +3,7 @@ import {
   CaretRightOutlined,
   DeleteOutlined,
   EditOutlined,
-  LoginOutlined,
+  PoweroffOutlined,
 } from "@ant-design/icons";
 import { Card, Input, InputRef } from "antd";
 import { CSSProperties, useRef, useState } from "react";
@@ -104,7 +104,7 @@ const EqCard = ({ ...item }: IFEquipment) => {
           </div>
 
           <div className="flex justify-between items-end">
-            <LoginOutlined
+            <PoweroffOutlined
               style={status ? { color: "greenyellow" } : { color: "red" }}
               onClick={() => handleOnOFF()}
               className="text-5xl"

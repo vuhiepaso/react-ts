@@ -60,10 +60,14 @@ const ProductDetail = () => {
       } = await listProduct(pageID, 0);
       setLoading(false);
       if (product_id) {
-        console.log(product);
-        const value = product[+product_id - 1];
-        // const index = state.products.findIndex((prd) => prd.id === payload.id);
-        const { description, image, price, title, id, quantity } = value;
+        const index = product.findIndex(
+          (prd: IFProductDetail) => prd.id === product_id
+        );
+        // const value = product[index];
+        // const value = product[+product_id - 1];
+
+        const { description, image, price, title, id, quantity } =
+          product[index];
         const customValue: IFProductDetail = {
           id,
           nameProduct: title,
