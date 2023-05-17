@@ -20,12 +20,10 @@ import { logoutAction } from "../store/sliceAuth";
 function LayoutDefault() {
   const state = useSelector((state: RootState) => state).auth;
   const carSate = useSelector((state: RootState) => state).card;
-  // const dispatch = useDispatch();
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  // console.log("state", state.profile.username);
-  // console.log("reload Layout Default");
 
   const handleOk = () => {
     dispatch(logoutAction());

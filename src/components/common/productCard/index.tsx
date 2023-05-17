@@ -1,9 +1,9 @@
 import { Card, Skeleton } from "antd";
-import { DollarOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 import "./index.css";
+import { currencyFormat } from "../../../utils/format";
 
 export interface Product {
   id: any;
@@ -49,8 +49,7 @@ const ProductCard = ({ ...product }: Product) => {
                 description={
                   <>
                     <div className="font-bold flex items-center">
-                      <span>Price: {product.price} </span>{" "}
-                      <DollarOutlined className="px-1" />
+                      <span>Price: {currencyFormat(+product.price)} VND</span>
                     </div>
                     <div>{product.description}</div>
                   </>

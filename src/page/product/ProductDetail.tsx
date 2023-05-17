@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Carousel, Col, Image, InputNumber, Row, Skeleton } from "antd";
-import {
-  RightCircleOutlined,
-  LeftCircleOutlined,
-  DollarOutlined,
-} from "@ant-design/icons";
+import { RightCircleOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import { CarouselRef } from "antd/es/carousel";
 import { currencyFormat } from "../../utils/format";
 import { useParams } from "react-router-dom";
@@ -38,7 +34,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
 
   const dispatch = useAppDispatch();
-
+  const { page, product_id } = useParams();
   const handleAddToCart = () => {
     const data: ItemProductCart = {
       id: productData.id,
@@ -47,10 +43,11 @@ const ProductDetail = () => {
       numberOder: quantity,
       price: productData.price,
       image: productData.images?.length ? productData.images[0] : undefined,
+      url: `product/${page}/${product_id}`,
     };
     dispatch(addToCart(data));
   };
-  const { page, product_id } = useParams();
+
   useEffect(() => {
     const productList = async () => {
       let pageID = page ? +page : 1;
@@ -189,9 +186,10 @@ const ProductDetail = () => {
                   <div className="mx-5"></div>
                   <div style={{ width: 300 }}>
                     <div className="flex items-center">
-                      <div>{currencyFormat(productData.price)}</div>
-
-                      <DollarOutlined className="px-2" />
+                      <div className="px-2">
+                        {currencyFormat(productData.price)}
+                      </div>
+                      VND
                     </div>
                     <div>
                       <InputNumber

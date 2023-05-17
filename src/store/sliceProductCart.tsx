@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ItemProductCart } from "../page/cart";
 
 const localProduct = JSON.parse(localStorage.getItem("cartProduct") + "" || "");
-console.log(localProduct);
 const productCart = createSlice({
   name: "cart",
   initialState: {
@@ -10,13 +9,20 @@ const productCart = createSlice({
   },
   reducers: {
     addToCart: (state, action: PayloadAction<ItemProductCart>) => {
-      state.products = [...state.products, action.payload];
-      console.log(state.products);
-      //   localStorage.setItem("cartProduct", JSON.stringify(state.products));
+      const index = state.products.findIndex(
+        (prd) => prd.id === action.payload.id
+      );
+
+      if (index !== -1) {
+        state.products[index].numberOder += action.payload.numberOder;
+      } else {
+        state.products = [...state.products, action.payload];
+      }
+      localStorage.setItem("cartProduct", JSON.stringify(state.products));
     },
     removeCart: (state, action: PayloadAction<ItemProductCart>) => {
-      state.products = filterProduct(state.products, action.payload);
-
+      const products = JSON.parse(JSON.stringify(state.products));
+      state.products = filterProduct(products, action.payload);
       localStorage.setItem("cartProduct", JSON.stringify(state.products));
     },
     updateQuantity: (state, action: PayloadAction<ItemProductCart>) => {
@@ -30,9 +36,8 @@ const productCart = createSlice({
 });
 
 const filterProduct = (list: ItemProductCart[], product: ItemProductCart) =>
-  list.filter((prd) => {
-    prd.id !== product.id;
-  });
+  list.filter((prd) => prd.id !== product.id);
+
 const { reducer, actions } = productCart;
 export const { addToCart, removeCart, updateQuantity } = actions; // Actions
 export default reducer;
