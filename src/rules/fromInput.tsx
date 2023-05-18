@@ -3,6 +3,8 @@ const REGEX_PASSWORD =
   // eslint-disable-next-line no-useless-escape
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>ยง~\[\]\|\\?\/])/;
 
+const NUM_PHONE = /^\d{10}$/;
+
 const required = (label: string): RuleObject => ({
   required: true,
   message: `Please input your ${label} !`,
@@ -28,6 +30,11 @@ const customPassword: RuleObject = {
     "This is including at least 1 lowercase letter, 1 uppercase letter, and 1 special character.",
 };
 
+const phoneNumber: RuleObject = {
+  pattern: NUM_PHONE,
+  message: "This must enter the number.",
+};
+
 const confirmPassword: Rule = ({ getFieldValue }) => ({
   validator(_, value) {
     if (!value || getFieldValue("password") === value) {
@@ -39,4 +46,12 @@ const confirmPassword: Rule = ({ getFieldValue }) => ({
   },
 });
 
-export { required, min, max, email, customPassword, confirmPassword };
+export {
+  required,
+  min,
+  max,
+  email,
+  customPassword,
+  confirmPassword,
+  phoneNumber,
+};

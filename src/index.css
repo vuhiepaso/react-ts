@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 .ant-btn-primary{
-    background-color: #1677ff ;
+    background-color: #150c1583 ;
+}
+.ant-btn-primary:hover{
+    color: #150c1583 !important;
+    background-color: rgba(245, 245, 245, 0.568) !important;
+    border: 1px solid #150c1559;
 }
 body {
     color:#150c15 ;

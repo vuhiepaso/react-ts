@@ -1,4 +1,14 @@
-import { Button, Col, Empty, InputNumber, Modal, Row, Steps } from "antd";
+import {
+  Button,
+  Col,
+  Empty,
+  InputNumber,
+  Modal,
+  Row,
+  Steps,
+  Table,
+  Tooltip,
+} from "antd";
 import { useEffect, useState } from "react";
 import { currencyFormat } from "../../utils/format";
 import {
@@ -10,16 +20,25 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store";
-import { removeCart, updateQuantity } from "../../store/sliceProductCart";
+import {
+  removeAll,
+  removeCart,
+  updateQuantity,
+} from "../../store/sliceProductCart";
 import { checkPayment } from "../../api/pay";
 
 const NUM_AC = "1903827*******";
-
+const localBill = JSON.parse(
+  localStorage.getItem("listBill") + "" || ""
+) as infoBill[];
 const Cart = () => {
   const carSate = useSelector((state: RootState) => state).card;
   const [total, setTotal] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpenBill, setModalOpenBill] = useState(false);
   const [codeBill, setCodeBill] = useState("");
+  const [listBill, setListBill] = useState(localBill || ([] as infoBill[]));
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const totalM = carSate.products.reduce(
       (accumulator, currentValue: ItemProductCart) =>
@@ -34,17 +53,66 @@ const Cart = () => {
     setCodeBill(code);
   };
 
-  const handleOrder = () => {
-    alert("ok");
+  const ondOrder = () => {
+    setModalOpenBill(true);
+    const code = "MDH" + Math.floor(Math.random() * 9999999);
+    setCodeBill(code);
+  };
+
+  const handleOrder = (paid?: boolean) => {
+    const data = billList();
+    const listNamePr = [] as string[];
+    data.forEach((e: any) => listNamePr.push(e.name));
+    const listValue: infoBill[] = [
+      {
+        code: codeBill,
+        total,
+        status: paid ? "Paid" : "Unpaid",
+        products: listNamePr,
+        current: 0,
+      },
+      ...listBill,
+    ];
+    setListBill(listValue);
+    if (listValue.length > 4) {
+      listValue.pop();
+    }
+    localStorage.setItem("listBill", JSON.stringify(listValue));
+    //   API Order
+    dispatch(removeAll());
   };
 
   const handleCheckPayment = async () => {
     const data = await checkPayment(NUM_AC);
     if (data.message === "success") {
+      handleOrder(true);
       alert("ok");
     } else {
       alert("fall");
     }
+  };
+  const billList = () => {
+    const list: any = [];
+    carSate.products.forEach((prd, index) => {
+      list.push({
+        ...prd,
+        key: "cl" + index,
+        price: currencyFormat(prd.price),
+        intoMoney: (
+          <>
+            <div>
+              {currencyFormat(prd.price)} x {prd.numberOder}
+              {" ="}{" "}
+              <span className="font-bold">
+                {currencyFormat(prd.price * prd.numberOder) + " VND"}
+              </span>
+            </div>
+            <div></div>
+          </>
+        ),
+      });
+    });
+    return list;
   };
   return (
     <>
@@ -75,7 +143,7 @@ const Cart = () => {
                       </Button>
                     </div>
                     <Button
-                      onClick={() => handleOrder()}
+                      onClick={() => ondOrder()}
                       style={{ maxWidth: 200 }}
                       type="primary"
                       block
@@ -99,15 +167,26 @@ const Cart = () => {
               <div className="text-3xl font-bold mb-20 flex items-center">
                 <FileDoneOutlined /> Status Order
               </div>
-              <ItemStatusBill />
+              {listBill.length ? (
+                listBill.map((bill, index) => (
+                  <ItemStatusBill
+                    key={"bill" + index}
+                    {...bill}
+                    current={index} ///test
+                  />
+                ))
+              ) : (
+                <Empty className="mt-28" />
+              )}
             </div>
           </Col>
         </Row>
       </div>
       <Modal
-        title={codeBill}
+        title={"Code: " + codeBill}
         open={isModalOpen}
         onCancel={() => setModalOpen(false)}
+        width={800}
         footer={
           <>
             <Button onClick={() => handleCheckPayment()} type="primary">
@@ -116,10 +195,84 @@ const Cart = () => {
           </>
         }
       >
-        <img
-          src={`https://img.vietqr.io/image/techcombank-${NUM_AC}-print.png?amount=${total}000&addInfo=${codeBill}&accountName=MY EARTH`}
-          alt=""
-        />
+        <Row>
+          <Col span={12}>
+            <div className="py-5">
+              <Table
+                footer={() => (
+                  <>
+                    <div className="text-xl">
+                      Total: {currencyFormat(total)} VND
+                    </div>
+                  </>
+                )}
+                pagination={false}
+                dataSource={billList()}
+                columns={[
+                  {
+                    title: "Name",
+                    dataIndex: "name",
+                    key: "name",
+                  },
+                  {
+                    title: "Unit Price(VND) x Quantity",
+                    dataIndex: "intoMoney",
+                    key: "intoMoney",
+                  },
+                ]}
+              />
+            </div>
+          </Col>
+          <Col span={12}>
+            <img
+              src={`https://img.vietqr.io/image/techcombank-${NUM_AC}-print.png?amount=${total}000&addInfo=${codeBill}&accountName=MY EARTH`}
+              alt=""
+            />
+          </Col>
+        </Row>
+      </Modal>
+      <Modal
+        title={"Code: " + codeBill}
+        open={isModalOpenBill}
+        onCancel={() => setModalOpenBill(false)}
+        footer={
+          <>
+            <Button
+              onClick={() => {
+                handleOrder(), setModalOpenBill(false);
+              }}
+              type="primary"
+            >
+              Order
+            </Button>
+          </>
+        }
+      >
+        <div className="py-5">
+          <Table
+            footer={() => (
+              <>
+                <div className="text-xl">
+                  Total: {currencyFormat(total)} VND
+                </div>
+              </>
+            )}
+            pagination={false}
+            dataSource={billList()}
+            columns={[
+              {
+                title: "Name",
+                dataIndex: "name",
+                key: "name",
+              },
+              {
+                title: "Unit Price(VND)  x  Quantity",
+                dataIndex: "intoMoney",
+                key: "intoMoney",
+              },
+            ]}
+          />
+        </div>
       </Modal>
     </>
   );
@@ -229,25 +382,47 @@ const Item = ({ ...productCart }: ItemProductCart) => {
   );
 };
 
-const ItemStatusBill = () => {
+interface infoBill {
+  code: string;
+  total: number;
+  status: "Paid" | "Unpaid";
+  products: string[];
+  current: number | undefined;
+}
+const ItemStatusBill = ({ ...infoBill }: infoBill) => {
   return (
     <>
-      <div className="text-xl font-bold my-2 ">Name bill</div>
+      <div className="text-xl font-bold my-2 ">
+        <Tooltip
+          placement="top"
+          title={
+            <>
+              <div>Code: {infoBill.code}</div>
+              <div>Total: {currencyFormat(infoBill.total)} </div>
+              <div>Status: {infoBill.status}</div>
+              <div>
+                Product: {infoBill.products.map((product) => product + " ")}
+              </div>
+            </>
+          }
+        >
+          Bill: {infoBill.products[0]}
+        </Tooltip>
+      </div>
+
       <Steps
-        // labelPlacement="vertical"
-        current={1}
+        current={infoBill.current}
         items={[
           {
             title: "Store",
-            description: "Expected delivery 20/12/2023",
+            description: "Waiting for order confirmation",
           },
           {
             title: "Delivery",
-            description: "Expected to receive 20/12/2023",
+            description: "Staff is on the way to transport",
           },
           {
             title: "Finished",
-            description: "Finished 20/12/2023",
           },
         ]}
       />

@@ -25,6 +25,10 @@ const productCart = createSlice({
       state.products = filterProduct(products, action.payload);
       localStorage.setItem("cartProduct", JSON.stringify(state.products));
     },
+    removeAll: (state) => {
+      state.products = [];
+      localStorage.removeItem("cartProduct");
+    },
     updateQuantity: (state, action: PayloadAction<ItemProductCart>) => {
       const { payload } = action;
       const index = state.products.findIndex((prd) => prd.id === payload.id);
@@ -39,5 +43,5 @@ const filterProduct = (list: ItemProductCart[], product: ItemProductCart) =>
   list.filter((prd) => prd.id !== product.id);
 
 const { reducer, actions } = productCart;
-export const { addToCart, removeCart, updateQuantity } = actions; // Actions
+export const { addToCart, removeCart, updateQuantity, removeAll } = actions; // Actions
 export default reducer;

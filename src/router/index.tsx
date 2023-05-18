@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 //Throw errors
-import { err400 } from "../page/throwErrors";
+import { err404 } from "../page/throwErrors";
 //Layout
 import LayoutAuth from "../layout/auth";
 import LayoutDefault, { IsAuth } from "../layout/layoutDefault";
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
   // Handle page err
   {
     path: "*",
-    element: err400,
+    element: err404,
   },
 ]);
 

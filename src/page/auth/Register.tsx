@@ -8,6 +8,7 @@ import {
   customPassword,
   confirmPassword,
   max,
+  phoneNumber,
 } from "../../rules/fromInput";
 import { IFRegister } from "../../interface";
 import { APIregister } from "../../api/auth";
@@ -78,6 +79,23 @@ function Register() {
             label="Username"
             name="username"
             rules={[required("Username"), min(4), max(20)]}
+            hasFeedback
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Address"
+            name="address"
+            rules={[required("Address"), max(60)]}
+            hasFeedback
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="phone"
+            label="Phone"
+            rules={[required("Phone"), phoneNumber]}
             hasFeedback
           >
             <Input />

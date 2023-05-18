@@ -3,11 +3,12 @@ import { Button, Carousel, Col, Image, InputNumber, Row, Skeleton } from "antd";
 import { RightCircleOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import { CarouselRef } from "antd/es/carousel";
 import { currencyFormat } from "../../utils/format";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { listProduct } from "../../api/product";
-import { useAppDispatch } from "../../store";
+import { RootState, useAppDispatch } from "../../store";
 import { addToCart } from "../../store/sliceProductCart";
 import { ItemProductCart } from "../cart";
+import { useSelector } from "react-redux";
 export interface IFProductDetail {
   id: string;
   nameProduct: string;
@@ -21,6 +22,7 @@ const images = [
   "https://gw.alipayobjects.com/zos/antfincdn/cV16ZqzMjW/photo-1473091540282-9b846e7965e3.webp",
   "https://gw.alipayobjects.com/zos/antfincdn/x43I27A55%26/photo-1438109491414-7198515b166b.webp",
 ];
+
 const ProductDetail = () => {
   const [visible, setVisible] = useState(false);
   const refCarousel = useRef<CarouselRef>(null);
@@ -28,24 +30,30 @@ const ProductDetail = () => {
   const [productData, setProductData] = useState<IFProductDetail>(
     {} as IFProductDetail
   );
-
+  const state = useSelector((state: RootState) => state).auth;
   const image = productData.images ? productData.images[0] : "";
   const [imageDefault, setImageDefault] = useState(image);
   const [loading, setLoading] = useState(true);
 
   const dispatch = useAppDispatch();
   const { page, product_id } = useParams();
+  const navigate = useNavigate();
   const handleAddToCart = () => {
-    const data: ItemProductCart = {
-      id: productData.id,
-      name: productData.nameProduct,
-      quantity: productData.quantity,
-      numberOder: quantity,
-      price: productData.price,
-      image: productData.images?.length ? productData.images[0] : undefined,
-      url: `product/${page}/${product_id}`,
-    };
-    dispatch(addToCart(data));
+    if (state.isAuth) {
+      const data: ItemProductCart = {
+        id: productData.id,
+        name: productData.nameProduct,
+        quantity: productData.quantity,
+        numberOder: quantity,
+        price: productData.price,
+        image: productData.images?.length ? productData.images[0] : undefined,
+        url: `product/${page}/${product_id}`,
+      };
+      dispatch(addToCart(data));
+      setQuantity(0);
+    } else {
+      navigate("/auth");
+    }
   };
 
   useEffect(() => {
@@ -202,6 +210,7 @@ const ProductDetail = () => {
                         min={0}
                         max={productData.quantity}
                         defaultValue={0}
+                        value={quantity}
                         onChange={(value) => setQuantity(value || 0)}
                       />
                     </div>
