@@ -51,7 +51,7 @@ function Auth() {
 
   return (
     <>
-      <div className="box_login max-w-xs m-auto mt-28">
+      <div className="box_login max-w-xs m-auto mt-20 ">
         <div className="text-center">
           <h2 className="text-2xl font-medium mb-5">Login</h2>
         </div>

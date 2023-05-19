@@ -57,7 +57,7 @@ function Register() {
 
   return (
     <>
-      <div className="box_login max-w-2xl m-auto mt-28">
+      <div className="box_login max-w-2xl m-auto">
         <div className="max-w-2xl m-auto  font-medium">
           <Link to={"/auth"} title="To login">
             <LoginOutlined className="text-xl icon-login" />

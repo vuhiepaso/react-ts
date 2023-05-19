@@ -88,7 +88,7 @@ const Cart = () => {
       handleOrder(true);
       alert("ok");
     } else {
-      alert("fall");
+      alert("fail");
     }
   };
   const billList = () => {
@@ -172,7 +172,7 @@ const Cart = () => {
                   <ItemStatusBill
                     key={"bill" + index}
                     {...bill}
-                    current={index} ///test
+                    // current={index} ///test
                   />
                 ))
               ) : (

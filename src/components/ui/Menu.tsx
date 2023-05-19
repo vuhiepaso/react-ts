@@ -17,10 +17,10 @@ const Menu: React.FC = () => {
       name: "Equipment",
       to: "/equipment",
     },
-    {
-      name: "Room",
-      to: "/room",
-    },
+    // {
+    //   name: "Room",
+    //   to: "/room",
+    // },
   ];
   return (
     <>

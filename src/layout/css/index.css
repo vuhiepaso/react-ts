@@ -17,3 +17,14 @@
 .icon_logout{
     color: red;
 }
+.box-bg--auth{
+    width: 100%;
+    background-image: url("https://m.media-amazon.com/images/I/61BQL9jio6L.jpg");
+    background-size: cover;
+    background-position: bottom ;
+}
+.box-bg--outlet{
+    /* background-color: #ffffff9e;
+    height: 100%; */
+    color: white;
+}

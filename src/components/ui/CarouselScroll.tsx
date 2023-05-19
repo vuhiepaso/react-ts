@@ -5,22 +5,20 @@ const carousels = [
   {
     id: 1,
     image:
-      "https://news.umanitoba.ca/wp-content/uploads/2020/10/Career-Month-Job-Posting-centre.jpg",
+      "https://thumbs.dreamstime.com/b/banner-edison-lamps-hanging-ceiling-vintage-style-light-bulbs-decorating-room-loft-design-background-antique-electronic-235554725.jpg",
   },
   {
     id: 2,
     image:
-      "https://designbuffs.com/wp-content/uploads/2020/02/linkedin-carousel-posts_d6a0e33a5d3a19e802e9091ebaed37c7_2000.png",
+      "https://www.lightstyleoftampabay.com/wp-content/uploads/2016/10/elan-HP-Banner.jpg",
   },
   {
     id: 3,
-    image:
-      "https://resources.workable.com/wp-content/uploads/2018/06/linkedin_job_posting2x-1.png",
+    image: "https://crystalline.se/userfiles/image/banner-39.jpg",
   },
   {
     id: 4,
-    image:
-      "https://www.apollotechnical.com/wp-content/uploads/2020/10/how-to-write-a-job-posting.jpg",
+    image: "https://d3l97e4uq59tzn.cloudfront.net/images/b_lamps_banner.jpg",
   },
 ];
 

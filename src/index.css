@@ -11,6 +11,7 @@
 }
 body {
     color:#150c15 ;
+    font-family: Montserrat,sans-serif;
 }
 .truncate-line-3{
     display: -webkit-box;

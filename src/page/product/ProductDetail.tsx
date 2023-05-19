@@ -1,5 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Carousel, Col, Image, InputNumber, Row, Skeleton } from "antd";
+import {
+  Button,
+  Carousel,
+  Col,
+  Image,
+  InputNumber,
+  Row,
+  Skeleton,
+  message,
+} from "antd";
 import { RightCircleOutlined, LeftCircleOutlined } from "@ant-design/icons";
 import { CarouselRef } from "antd/es/carousel";
 import { currencyFormat } from "../../utils/format";
@@ -18,9 +27,9 @@ export interface IFProductDetail {
   images: string[];
 }
 const images = [
-  "https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp",
-  "https://gw.alipayobjects.com/zos/antfincdn/cV16ZqzMjW/photo-1473091540282-9b846e7965e3.webp",
-  "https://gw.alipayobjects.com/zos/antfincdn/x43I27A55%26/photo-1438109491414-7198515b166b.webp",
+  "https://juliettesinteriors.co.uk/wp-content/uploads/2019/09/exclusive-gold-leaf-italian-wall-lamp-1.jpg",
+  "https://cdn.shopify.com/s/files/1/0549/3948/4207/products/ChristmasLight_RoseLamp2.jpg?v=1638198915",
+  "https://cdn.shopify.com/s/files/1/0550/0970/6207/collections/Waterford_Crystal_Crystal_Lamps.jpg?v=1642600348",
 ];
 
 const ProductDetail = () => {
@@ -38,6 +47,7 @@ const ProductDetail = () => {
   const dispatch = useAppDispatch();
   const { page, product_id } = useParams();
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
   const handleAddToCart = () => {
     if (state.isAuth) {
       const data: ItemProductCart = {
@@ -51,6 +61,10 @@ const ProductDetail = () => {
       };
       dispatch(addToCart(data));
       setQuantity(0);
+      messageApi.open({
+        type: "success",
+        content: "Add to cart success",
+      });
     } else {
       navigate("/auth");
     }
@@ -93,6 +107,7 @@ const ProductDetail = () => {
   return (
     <>
       <div className="container p-16">
+        {contextHolder}
         <Skeleton loading={loading} avatar paragraph={{ rows: 4 }}>
           <Row>
             <Col>
@@ -218,6 +233,19 @@ const ProductDetail = () => {
                       {productData.describe}
                     </div>
                   </div>
+                </div>
+                <div className="my-5">
+                  <div className="text-xl mb-2 font-normal"> Overview</div>
+                  <ul>
+                    <li>Overall Dimensions: 11W x 15D x 64 - 69.5H in.</li>
+                    <li>Shade dimensions: 6.5W x 13.5H in.</li>
+                    <li>Blackened bronze finish</li>
+                    <li>Cylindrical perforated metal shade</li>
+                    <li>Foot switch</li>
+                    <li>
+                      Requires one T185 110V LED Edison bulb (not included)
+                    </li>
+                  </ul>
                 </div>
                 <div className="mt-10">
                   <Button
