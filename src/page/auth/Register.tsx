@@ -12,7 +12,7 @@ import {
 } from "../../rules/fromInput";
 import { IFRegister } from "../../interface";
 import { APIregister } from "../../api/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginOutlined } from "@ant-design/icons";
 interface MessageAuth {
   status: "" | "error";
@@ -25,6 +25,7 @@ function Register() {
     messHelp: null,
   });
   const [spinning, setSpinning] = useState(false);
+  const navigator = useNavigate();
 
   const onFinish = async (values: IFRegister) => {
     setSpinning(true);
@@ -37,6 +38,7 @@ function Register() {
       });
     } else {
       openNotificationWithIcon();
+      navigator("/auth");
     }
   };
 

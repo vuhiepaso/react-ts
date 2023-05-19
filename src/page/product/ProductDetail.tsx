@@ -35,7 +35,7 @@ const images = [
 const ProductDetail = () => {
   const [visible, setVisible] = useState(false);
   const refCarousel = useRef<CarouselRef>(null);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [productData, setProductData] = useState<IFProductDetail>(
     {} as IFProductDetail
   );
@@ -60,7 +60,7 @@ const ProductDetail = () => {
         url: `product/${page}/${product_id}`,
       };
       dispatch(addToCart(data));
-      setQuantity(0);
+      // setQuantity(0);
       messageApi.open({
         type: "success",
         content: "Add to cart success",

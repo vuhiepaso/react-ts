@@ -34,11 +34,13 @@ function LayoutDefault() {
     <>
       <header className="box_header">
         <div className="container m-auto  flex justify-between items-center px-7 py-4 ">
-          <h2 className="text-3xl font-bold logo">
-            MY <span className="earth">EARTH</span>
-          </h2>
+          <Link to={"/"}>
+            <h2 className="text-3xl font-bold logo">
+              MY <span className="earth">EARTH</span>
+            </h2>
+          </Link>
           <nav>
-            <Menu />
+            <Menu isAuth={state.isAuth} />
           </nav>
           <div className="flex justify-between items-center">
             <div className="mt-1 mr-1">{state.profile.username || "Name"}</div>

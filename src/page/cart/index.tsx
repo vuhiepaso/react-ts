@@ -27,7 +27,7 @@ import {
 } from "../../store/sliceProductCart";
 import { checkPayment } from "../../api/pay";
 
-const NUM_AC = "1903827*******";
+const NUM_AC = "19038273546012";
 const localBill = JSON.parse(
   localStorage.getItem("listBill") + "" || ""
 ) as infoBill[];
