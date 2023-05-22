@@ -48,7 +48,7 @@ const authSlice = createSlice({
         state.myToke = data.token;
         state.isAuth = true;
         localStorage.setItem("profile", JSON.stringify(data.info));
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", `Token ${data.token}`);
       }
     });
     // builder.addCase(loginThunk.rejected, (state, action) => {

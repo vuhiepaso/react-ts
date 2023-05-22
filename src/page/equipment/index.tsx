@@ -13,7 +13,6 @@ const Equipment = () => {
     };
     rq_equipment();
   }, []);
-
   useEffect(() => {
     function onConnect() {
       console.log("onConnect");
@@ -24,7 +23,7 @@ const Equipment = () => {
     }
 
     function onEvents(value: any) {
-      console.log(value);
+      setEquipment(value.data);
     }
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
@@ -33,14 +32,15 @@ const Equipment = () => {
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("foo", onEvents);
+      socket.off("onEvents", onEvents);
+      console.log("oksss");
     };
   }, []);
 
   return (
     <>
       <Row justify="space-between">
-        {equipment.length &&
+        {equipment &&
           equipment.map((item) => (
             <Col className="my-5" key={item.id} span={4}>
               <div className="m-auto w-fit">

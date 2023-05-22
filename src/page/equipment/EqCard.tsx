@@ -6,7 +6,7 @@ import {
   PoweroffOutlined,
 } from "@ant-design/icons";
 import { InputRef, Card, Input, Popconfirm } from "antd";
-import { useState, useRef, CSSProperties } from "react";
+import { useState, useRef, CSSProperties, useEffect } from "react";
 import { changeEquipments, removeEquipments } from "../../api/equipment";
 
 export interface IFEquipment {
@@ -22,11 +22,9 @@ const EqCard = ({ ...item }: IFEquipment) => {
   const inputRef = useRef<InputRef>(null);
 
   const [name, setName] = useState(item.name);
-  const [status, setStatus] = useState(item.status);
 
   const handleOnOFF = async () => {
-    await changeEquipments({ ...item, status: !status });
-    setStatus(!status);
+    await changeEquipments({ ...item, status: !item.status });
   };
   const handleDelete = async (id: number) => {
     await removeEquipments(id);
@@ -40,6 +38,7 @@ const EqCard = ({ ...item }: IFEquipment) => {
 
   return (
     <>
+      {item.status + ""}
       <div style={{ width: 150, height: 160 }}>
         <div
           style={scroll ? styleCard : { display: "none" }}
@@ -61,7 +60,7 @@ const EqCard = ({ ...item }: IFEquipment) => {
             <>
               <div className="flex justify-between items-center">
                 {activeName ? (
-                  <span>{name}</span>
+                  <span>{item.name}</span>
                 ) : (
                   <Input
                     onBlur={({ target }) => handleInput(target.value)}
@@ -76,6 +75,7 @@ const EqCard = ({ ...item }: IFEquipment) => {
                   <EditOutlined
                     onClick={() => {
                       setActiveName(false);
+                      setName(item.name);
                       setTimeout(() => {
                         inputRef.current!.focus({
                           cursor: "all",
@@ -100,7 +100,7 @@ const EqCard = ({ ...item }: IFEquipment) => {
 
           <div className="flex justify-between items-end">
             <PoweroffOutlined
-              style={status ? { color: "greenyellow" } : { color: "red" }}
+              style={item.status ? { color: "greenyellow" } : { color: "red" }}
               onClick={() => handleOnOFF()}
               className="text-5xl"
             />
