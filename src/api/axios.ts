@@ -4,8 +4,9 @@ axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
 
 // 2 headers (token)
-axios.defaults.headers.common["Authorization"] = localStorage.getItem("token");
-
+axios.defaults.headers.common["Authorization"] = `Token ${localStorage.getItem(
+  "token"
+)}`;
 // 3 handle request
 axios.interceptors.request.use(
   function (config) {
