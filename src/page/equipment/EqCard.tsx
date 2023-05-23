@@ -35,10 +35,14 @@ const EqCard = ({ ...item }: IFEquipment) => {
     }
     setActiveName(true);
   };
+  const onHandleOnKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === "Enter") {
+      handleInput((e.target as HTMLInputElement).value);
+    }
+  };
 
   return (
     <>
-      {item.status + ""}
       <div style={{ width: 150, height: 160 }}>
         <div
           style={scroll ? styleCard : { display: "none" }}
@@ -60,12 +64,18 @@ const EqCard = ({ ...item }: IFEquipment) => {
             <>
               <div className="flex justify-between items-center">
                 {activeName ? (
-                  <span>{item.name}</span>
+                  <span
+                    title={item.name}
+                    className="text-ellipsis overflow-hidden"
+                  >
+                    {item.name}
+                  </span>
                 ) : (
                   <Input
                     onBlur={({ target }) => handleInput(target.value)}
                     onChange={({ target }) => setName(target.value)}
-                    placeholder="Name "
+                    onKeyDown={(e) => onHandleOnKey(e)}
+                    placeholder="Name"
                     value={name}
                     ref={inputRef}
                   />

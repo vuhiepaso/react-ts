@@ -33,12 +33,12 @@ const Equipment = () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
       socket.off("onEvents", onEvents);
-      console.log("oksss");
     };
   }, []);
 
   return (
     <>
+      <div>hiep</div>
       <Row justify="space-between">
         {equipment &&
           equipment.map((item) => (

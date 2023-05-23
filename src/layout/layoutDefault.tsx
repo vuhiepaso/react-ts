@@ -7,10 +7,11 @@ import {
   LoginOutlined,
   LogoutOutlined,
   MailOutlined,
+  MenuOutlined,
   PhoneOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { Badge, Modal } from "antd";
+import { Badge, Collapse, Drawer, Modal } from "antd";
 
 import Menu from "../components/ui/Menu";
 import { RootState, useAppDispatch } from "../store";
@@ -20,6 +21,7 @@ import { logoutAction } from "../store/sliceAuth";
 function LayoutDefault() {
   const state = useSelector((state: RootState) => state).auth;
   const carSate = useSelector((state: RootState) => state).card;
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -29,6 +31,43 @@ function LayoutDefault() {
     dispatch(logoutAction());
     navigate("/auth");
   };
+  const ContentComputer = (
+    <>
+      <nav>
+        <Menu isAuth={state.isAuth} />
+      </nav>
+      <div className="flex justify-between items-center">
+        <div className="mt-1 mr-1">{state.profile.username || "Name"}</div>
+        <div className="mx-3">|</div>
+        {state.isAuth && (
+          <>
+            <Link to={"/cart"}>
+              <Badge count={carSate.products.length}>
+                <ShoppingCartOutlined
+                  style={{ color: "#fff" }}
+                  className="text-2xl "
+                />
+              </Badge>
+            </Link>
+            <div className="mx-3">|</div>
+          </>
+        )}
+        {state.isAuth ? (
+          <div className="flex  items-center" onClick={() => setOpen(true)}>
+            <div className="mt-1 mr-1">Logout</div>
+            <LogoutOutlined className="icon_logout py-4 text-xl font-black" />
+          </div>
+        ) : (
+          <>
+            <Link to={"/auth"} className="flex  items-center">
+              <div className="mt-1 mr-1">Login</div>
+              <LoginOutlined className="py-4 text-2xl" />
+            </Link>
+          </>
+        )}
+      </div>
+    </>
+  );
 
   return (
     <>
@@ -39,12 +78,10 @@ function LayoutDefault() {
               MY <span className="earth">EARTH</span>
             </h2>
           </Link>
-          <nav>
-            <Menu isAuth={state.isAuth} />
-          </nav>
-          <div className="flex justify-between items-center">
-            <div className="mt-1 mr-1">{state.profile.username || "Name"}</div>
-            <div className="mx-3">|</div>
+          <div className=" display__box--pc flex justify-between items-center w-2/3">
+            {ContentComputer}
+          </div>
+          <div className="max-md display__box--mob">
             {state.isAuth && (
               <>
                 <Link to={"/cart"}>
@@ -55,24 +92,47 @@ function LayoutDefault() {
                     />
                   </Badge>
                 </Link>
-                <div className="mx-3">|</div>
               </>
             )}
-            {state.isAuth ? (
-              <div className="flex  items-center" onClick={() => setOpen(true)}>
-                <div className="mt-1 mr-1">Logout</div>
-                <LogoutOutlined className="icon_logout py-4 text-xl font-black" />
-              </div>
-            ) : (
-              <>
-                <Link to={"/auth"} className="flex  items-center">
-                  <div className="mt-1 mr-1">Login</div>
-                  <LoginOutlined className="py-4 text-2xl" />
-                </Link>
-              </>
-            )}
+            <MenuOutlined
+              onClick={() => setOpenDrawer(true)}
+              className="text-xl ml-3 "
+            />
           </div>
         </div>
+        <Drawer
+          title={
+            <>
+              <div className="flex justify-end">
+                {state.isAuth ? (
+                  <div
+                    className="flex  items-center"
+                    onClick={() => setOpen(true)}
+                  >
+                    <div className="mt-1 mr-1">LogOut</div>
+                  </div>
+                ) : (
+                  <>
+                    <Link to={"/auth"} className="flex  items-center">
+                      <div className="mt-1 mr-1">Login</div>
+                    </Link>
+                  </>
+                )}
+              </div>
+            </>
+          }
+          footer={
+            <div className="text-base font-bold text-right">
+              {state.profile.username || "Name"}
+            </div>
+          }
+          placement="right"
+          width="80%"
+          onClose={() => setOpenDrawer(false)}
+          open={openDrawer}
+        >
+          <Menu onChange={() => setOpenDrawer(false)} isAuth={state.isAuth} />
+        </Drawer>
       </header>
 
       {/* body content */}

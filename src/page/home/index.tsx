@@ -41,7 +41,7 @@ const Home = () => {
         <CarouselScroll />
       </div>
 
-      <div className="min-h px-16">
+      <div className="min-h px-2">
         <div className="text-2xl flex items-center">
           <ProfileOutlined className="mr-2" />
           <h3 className=" my-2 font-bold ">List Product </h3>
@@ -49,9 +49,14 @@ const Home = () => {
 
         {/* https://lux2-api-dev.lux.vmo.group/api/v1/return-items?page=1&per_page=21&municipalities[]=26 */}
         <Skeleton loading={products.loading}>
-          <Row gutter={[24, 24]}>
+          <Row
+            gutter={[
+              { xs: 8, sm: 16, md: 24 },
+              { xs: 8, sm: 16, md: 24 },
+            ]}
+          >
             {products.listData?.map((product, index) => (
-              <Col span={4} key={index}>
+              <Col span={4} xs={12} md={6} xl={4} key={index}>
                 <ProductCard
                   page={products.page}
                   width={"100%"}

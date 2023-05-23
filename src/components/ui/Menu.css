@@ -10,6 +10,22 @@
 .box__to--link:hover{
     border-color: whitesmoke;
 }
+
 .mn_active{
     border-color: whitesmoke;
+}
+@media only screen and (max-width: 768px) {
+    .container__nav{
+        font-weight: 500;
+        font-size: 16px;
+        color: #150c1583;
+    }
+    .box__to--link{
+        border-radius: 0;
+        border: none;
+    
+    }
+    .mn_active{
+        color: #150c15;
+    }
 }

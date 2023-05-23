@@ -22,9 +22,22 @@
     background-image: url("https://m.media-amazon.com/images/I/61BQL9jio6L.jpg");
     background-size: cover;
     background-position: bottom ;
+    background-position-x: right;
 }
 .box-bg--outlet{
     /* background-color: #ffffff9e;
     height: 100%; */
     color: white;
+}
+/* RESPONSIVE */
+.display__box--mob{
+    display: none;
+}
+@media only screen and (max-width: 768px) {
+    .display__box--pc{
+        display: none !important;
+    }
+    .display__box--mob{
+        display: inline;
+    }
 }
