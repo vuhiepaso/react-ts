@@ -6,12 +6,12 @@ import "./index.css";
 import { currencyFormat } from "../../../utils/format";
 
 export interface Product {
-  id: any;
+  product_id: number;
   page?: number;
-  image: string;
-  title: string;
+  photos: any[];
+  name: string;
   price: string;
-  description?: string;
+  describe?: string;
   width?: number | string;
   height?: number | string;
 }
@@ -21,8 +21,8 @@ const ProductCard = ({ ...product }: Product) => {
     <>
       <div style={{ width: product.width || 270, height: product.height }}>
         <Link
-          key={product.id}
-          to={`product/${product.page || 1}/${+product.id}`}
+          key={product.product_id}
+          to={`product/${product.page || 1}/${+product.product_id}`}
         >
           <Card
             style={{ height: "100%" }}
@@ -32,9 +32,9 @@ const ProductCard = ({ ...product }: Product) => {
               <>
                 <img
                   style={{ height: 180, objectFit: "cover" }}
-                  src={product.image}
+                  src={product.photos[0].url}
                 />
-                {!product.image && (
+                {!product.photos.length && (
                   <Skeleton.Image
                     className="w-full skeleton__image"
                     active={true}
@@ -45,13 +45,13 @@ const ProductCard = ({ ...product }: Product) => {
           >
             <div>
               <Meta
-                title={product.title}
+                title={product.name}
                 description={
                   <>
                     <div className="font-bold flex items-center">
                       <span>Price: {currencyFormat(+product.price)} VND</span>
                     </div>
-                    <div>{product.description}</div>
+                    <div>{product.describe}</div>
                   </>
                 }
               />

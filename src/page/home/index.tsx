@@ -24,7 +24,7 @@ const Home = () => {
       setProducts((prevState) => ({
         ...prevState,
         loading: false,
-        listData: data.product,
+        listData: data.value,
       }));
     };
     productList();
